@@ -1,2 +1,4 @@
+huepy
+python-vlc
 requests
 toml

@@ -33,3 +33,9 @@ Review words from wordset in interactive mode:
 ```bash
 python3 -m skyeng review --wordset=123456
 ```
+
+Learn words via context training:
+
+```bash
+python3 -m skyeng learn --wordset=123456
+```
