@@ -19,6 +19,7 @@ parser.add_argument('--known', action='store_true', help='Show known words')
 def review(user, args):
     args = parser.parse_args(args)
     wordset = user.get_wordset(args.wordset)
+    print(PROMT_HELP)
     for word in wordset.get_words():
         if word.is_known is not args.known:
             continue
