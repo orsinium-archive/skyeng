@@ -1,5 +1,5 @@
 from argparse import ArgumentParser
-from random import shuffle
+from random import shuffle, choice
 import subprocess
 import re
 
@@ -13,8 +13,9 @@ REX = re.compile(r'(.*)\[(.+)\](.*)')
 parser = ArgumentParser('learn')
 parser.add_argument('--wordset', required=True, type=int, help='wordset ID')
 parser.add_argument('--known', action='store_true', help='Show known words')
+
 parser.add_argument('--repeats', type=int, default=3, help='times of repeats for word')
-parser.add_argument('--chunks', type=int, default=5, help='count of chunks of words in learn-write tasks')
+parser.add_argument('--chunks', type=int, default=3, help='count of chunks of words in learn-write tasks')
 
 
 def play(url):
@@ -66,12 +67,12 @@ def learn(user, args):
         for word in chunk:
             inspect_word(word, repeats=args.repeats)
         subprocess.call('clear', shell=True)
-        examples = [
-            (word, example['text'], example['soundUrl'])
-            for word in chunk
-            for example in word.info.examples
-        ]
+
+        examples = []
+        for word in chunk:
+            example = choice(word.info.examples)
+            examples.append((word, example['text'], example['soundUrl']))
         shuffle(examples)
-        for word, text, sound in examples[:5]:
+        for word, text, sound in examples:
             substitute_word(word=word, text=text, sound=sound)
     return 0
